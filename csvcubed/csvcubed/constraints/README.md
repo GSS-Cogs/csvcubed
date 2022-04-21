@@ -1,0 +1,1 @@
+Holding dir for validation of csvw outputs via compbined sparql + pandas queries, mainly as I've no idea yet where to put it.
