@@ -320,7 +320,6 @@ def test_attribute_new_literal():
     column_config = vc.ATTRIBUTE_NEW_LITERAL
     data = pd.Series(column_data, name="Attribute Heading")
 
-
     (column, _) = map_column_to_qb_component(
         "New Attribute", column_config, data, cube_config_minor_version=0
     )
@@ -749,6 +748,22 @@ def test_observation_value_data_type_extraction():
     ), column.structural_definition
     obs_val = column.structural_definition
     assert obs_val.data_type == "integer"
+
+
+def test_bool_column_is_supressed_from_json_config():
+    """
+    Test to ensure that columns are supressed when given a boolean value.
+    """
+    data = pd.DataFrame({"The Column": [1, 2, 3]})
+
+    (column, _) = _get_qb_column_from_json(
+        {False},
+        "The Column",
+        data,
+        1,
+    )
+
+    assert isinstance(column, QbColumn)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,39 @@
+{
+    "$schema": "https://purl.org/csv-cubed/qube-config/v1",
+    "title": "An example cube using a mixed code list",
+    "license": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+    "columns": {
+        "Location": {
+            "label": "Location",
+            "code_list": "./nuts-ons-code-list.json"
+        },
+        "Year": {
+            "label": "Financial Years",
+            "code_list": {
+                "title": "Financial Years",
+                "license": "http://www.opendatacommons.org/licenses/pddl/1.0/",
+                "concepts": [
+                    {
+                        "label": "1992 - 1993",
+                        "notation": "92-93",
+                        "same_as": "http://reference.data.gov.uk/id/government-year/92-93",
+                        "children": [
+                            {
+                                "label": "1993 - 1994",
+                                "notation": "93-94"
+                            }
+                        ]
+                    },
+                    {
+                        "label": "1994 - 1995",
+                        "notation": "94-95"
+                    },
+                    {
+                        "label": "1995 - 1996",
+                        "notation": "95-96"
+                    }
+                ]
+            }
+        }
+    }
+}

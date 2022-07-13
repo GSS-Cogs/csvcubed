@@ -1,0 +1,28 @@
+{
+    "$schema": "https://purl.org/csv-cubed/qube-config/v1.1",
+    "title": "Test cube config",
+    "summary": "Test cube config summary",
+    "description": "Test cube config description",
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "creator": "http://statistics.data.gov.uk",
+    "publisher": "http://statistics.data.gov.uk",
+    "dataset_issued": "2022-04-08T00:00:00Z",
+    "keywords": [
+        "Test cube"
+    ],
+    "columns": {
+        "Dimension": {
+            "type": "dimension",
+            "code_list": "../../code-list-config/v1.0/code_list_config_hierarchical.json"
+        },
+        "Value": {
+            "type": "observations"
+        },
+        "Measure": {
+            "type": "measures"
+        },
+        "Unit": {
+            "type": "units"
+        }
+    }
+}

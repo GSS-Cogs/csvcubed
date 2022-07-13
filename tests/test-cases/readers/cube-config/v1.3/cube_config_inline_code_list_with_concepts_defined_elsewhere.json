@@ -1,0 +1,81 @@
+{
+    "$schema": "https://purl.org/csv-cubed/qube-config/v1.1",
+    "title": "Test cube config",
+    "summary": "Test cube config summary",
+    "description": "Test cube config description",
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "creator": "http://statistics.data.gov.uk",
+    "publisher": "http://statistics.data.gov.uk",
+    "dataset_issued": "2022-04-08T00:00:00Z",
+    "keywords": [
+        "Test cube"
+    ],
+    "columns": {
+        "Dimension": {
+            "type": "dimension",
+            "code_list": {
+                "title": "Title of the code list",
+                "description": "Description of the code list",
+                "summary": "Summary of the code list",
+                "creator": "http://purl.org/dc/aboutdcmi#DCMI",
+                "publisher": "http://purl.org/dc/aboutdcmi#DCMI",
+                "dataset_issued": "2022-03-31T12:54:30Z",
+                "dataset_modified": "2022-04-01T12:54:30Z",
+                "license": "https://creativecommons.org/licenses/by/4.0/",
+                "themes": [
+                    "http://example.com/themes/theme"
+                ],
+                "keywords": [
+                    "keyword1"
+                ],
+                "sort": {
+                    "by": "label",
+                    "method": "ascending"
+                },
+                "concepts": [
+                    {
+                        "label": "A",
+                        "description": "A data record",
+                        "notation": "a",
+                        "same_as": "http://example.com/concepts/some-existing-concept"
+                    },
+                    {
+                        "label": "C",
+                        "description": "C data record",
+                        "notation": "c"
+                    },
+                    {
+                        "label": "B",
+                        "description": "B data record",
+                        "notation": "b",
+                        "sort_order": 0,
+                        "children": [
+                            {
+                                "label": "D",
+                                "description": "D data record",
+                                "notation": "d",
+                                "sort_order": 0,
+                                "children": [
+                                    {
+                                        "label": "E",
+                                        "description": "E data record",
+                                        "notation": "e"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "Value": {
+            "type": "observations"
+        },
+        "Measure": {
+            "type": "measures"
+        },
+        "Unit": {
+            "type": "units"
+        }
+    }
+}

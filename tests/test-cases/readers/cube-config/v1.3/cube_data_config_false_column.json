@@ -1,0 +1,51 @@
+{
+    "$schema": "https://purl.org/csv-cubed/qube-config/v1.0",
+    "id": "Schema cube data config ok",
+    "title": "Tests/test-cases/config/schema-cube-data-config-ok",
+    "description": "Schema for testing",
+    "creator": "https://www.gov.uk/government/organisations/office-for-national-statistics",
+    "publisher": "http://statistics.data.gov.uk",
+    "spatial_bound": "spatial",
+    "temporal_bound": "temporal",
+    "dataset_issued": "2022-03-04",
+    "dataset_modified": "2022-03-04T15:00:00Z",
+    "public_contact_point": "mailto:csvcubed@example.com",
+    "license": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+    "summary": "a summary",
+    "keywords": [
+        "A keyword",
+        "Another keyword"
+    ],
+    "themes": [
+        "https://www.ons.gov.uk/economy/nationalaccounts/balanceofpayments"
+    ],
+    "columns": {
+        "Dim-0": {
+            "label": "Non Dimension",
+            "type": "dimension",
+            "code_list": true
+        },
+        "Dim-1": false,
+        "Dim-2": {
+            "type": "dimension",
+            "label": "Trade Direction Dimension",
+            "code_list": true
+        },
+        "Attr-1": {
+            "type": "attribute",
+            "label": "My best attribute"
+        },
+        "Amount": {
+            "type": "observations",
+            "label": "Volume"
+        },
+        "Measure": {
+            "type": "measures",
+            "values": true
+        },
+        "Units": {
+            "type": "units",
+            "values": true
+        }
+    }
+}

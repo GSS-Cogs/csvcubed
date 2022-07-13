@@ -8,14 +8,14 @@ import logging
 from json import JSONDecodeError
 import pandas as pd
 from pathlib import Path
-from typing import Dict, Optional, Tuple, List, Callable
+from typing import Dict, Optional, Tuple, List, Callable, Union
 
 from jsonschema.exceptions import ValidationError as JsonSchemaValidationError
 
 from csvcubed.models.cube.qb.columns import QbColumn
 
 from csvcubed.models.cube import QbCube
-from csvcubed.models.cube.columns import CsvColumn
+from csvcubed.models.cube.columns import CsvColumn, SuppressedCsvColumn
 from csvcubed.models.cube.cube import Cube
 from csvcubed.models.cube.qb.catalog import CatalogMetadata
 from csvcubed.models.validationerror import ValidationError
@@ -132,12 +132,16 @@ def get_deserialiser(
 
 def _get_cube_from_config_json_dict(
     data: pd.DataFrame,
-    config: Dict,
+    config: Union[Dict, bool],
     cube_config_minor_version: int,
     config_path: Optional[Path] = None,
 ) -> Tuple[QbCube, list[JsonSchemaValidationError]]:
-    columns: List[CsvColumn] = []
+    # columns: List[CsvColumn] = []
     metadata: CatalogMetadata = metadata_from_dict(config)
+    if config == False:
+        columns: List[SuppressedCsvColumn] = []
+    else:
+        columns: List[CsvColumn] = []
 
     config_columns = config.get("columns", {})
     code_list_schema_validation_errors: list[JsonSchemaValidationError] = []

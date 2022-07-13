@@ -1,0 +1,47 @@
+{
+    "$schema": "https://purl.org/csv-cubed/code-list-config/v1.0",
+    "title": "Mixed Geographies Code List",
+    "description": "This mixes together concepts from the NUTS and ONS Geographies code lists to solve the NUTS 'England' problem.",
+    "license": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+    "concepts": [
+        {
+            "label": "United Kingdom",
+            "notation": "UK",
+            "same_as": "http://data.europa.eu/nuts/code/UK",
+            "children": [
+                {
+                    "label": "Wales",
+                    "notation": "UKL",
+                    "same_as": "http://data.europa.eu/nuts/code/UKL"
+                },
+                {
+                    "label": "Scotland",
+                    "notation": "UKM",
+                    "same_as": "http://data.europa.eu/nuts/code/UKM"
+                },
+                {
+                    "label": "England",
+                    "notation": "E92000001",
+                    "same_as": "http://statistics.data.gov.uk/id/statistical-geography/E92000001",
+                    "children": [
+                        {
+                            "label": "London",
+                            "notation": "UKI",
+                            "same_as": "http://data.europa.eu/nuts/code/UKI"
+                        },
+                        {
+                            "label": "North East (England)",
+                            "notation": "UKC",
+                            "same_as": "http://data.europa.eu/nuts/code/UKC"
+                        },
+                        {
+                            "label": "North West (England)",
+                            "notation": "UKD",
+                            "same_as": "http://data.europa.eu/nuts/code/UKD"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
