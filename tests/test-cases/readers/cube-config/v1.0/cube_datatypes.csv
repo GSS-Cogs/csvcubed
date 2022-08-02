@@ -1,0 +1,2 @@
+Dim-0,Dim-1,Dim-2,Attr-anyURI,Attr-boolean,Attr-decimal,Attr-integer,Attr-long,Attr-int,Attr-short,Attr-nonNegativeInteger,Attr-positiveInteger,Attr-unsignedLong,Attr-unsignedInt,Attr-unsignedShort,Attr-nonPositiveInteger,Attr-negativeInteger,Attr-double,Attr-float,Attr-string,Attr-language,Attr-date,Attr-dateTime,Attr-dateTimeStamp,Attr-time,Value,Measure,Units
+foo,bar,baz,http://www.foo.com,true,0.11,-1,-2147483647,-1,-32768,1,1,2147483646,1,32768,-1,-1,0.03142,0.03142,foo,english,2019-09-07,2019-09-07T15:50:00,2004-04-12T13:20:00Z,14:30:43,1,count,stuff

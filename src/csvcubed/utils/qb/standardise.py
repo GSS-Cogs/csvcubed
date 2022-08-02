@@ -30,8 +30,8 @@ _unsigned_integer_data_types = {
     "unsignedInt",
     "unsignedShort",
     "unsignedByte",
-    "nonPositiveInteger",
-    "negativeInteger",
+    "nonNegativeInteger",
+    "positiveInteger",
 }
 _signed_integer_data_types = {
     "integer",
@@ -39,8 +39,8 @@ _signed_integer_data_types = {
     "int",
     "short",
     "byte",
-    "nonNegativeInteger",
-    "positiveInteger",
+    "nonPositiveInteger",
+    "negativeInteger",
 }
 
 
@@ -77,10 +77,13 @@ def ensure_int_columns_are_ints(cube: QbCube) -> None:
 
     def _coerce_to_int_values_if_int(column_title: str, data_type: str):
         assert cube.data is not None
-        if data_type in _signed_integer_data_types:
-            cube.data[column_title] = cube.data[column_title].astype(pd.Int64Dtype())
-        elif data_type in _unsigned_integer_data_types:
-            cube.data[column_title] = cube.data[column_title].astype(pd.UInt64Dtype())
+        try:
+            if data_type in _signed_integer_data_types:
+                cube.data[column_title] = cube.data[column_title].astype(pd.Int64Dtype())
+            elif data_type in _unsigned_integer_data_types:
+                cube.data[column_title] = cube.data[column_title].astype(pd.UInt64Dtype())
+        except Exception as err:
+            raise Exception(f'Column {column_title} failing,csvw  data type was {data_type}, pandas data type was {cube.data[column_title].dtype}') from err
 
     for obs_val_col in get_columns_of_dsd_type(cube, QbObservationValue):
         _coerce_to_int_values_if_int(
@@ -145,7 +148,7 @@ def convert_data_values_to_uri_safe_values(
     for dimension_column in get_columns_of_dsd_type(cube, NewQbDimension):
         if isinstance(dimension_column.structural_definition.code_list, NewQbCodeList):
             new_code_list = dimension_column.structural_definition.code_list
-            map_attr_val_labels_to_uri_identifiers = dict(
+            map_dim_val_labels_to_uri_identifiers = dict(
                 [
                     (concept.label, concept.uri_safe_identifier)
                     for concept in new_code_list.concepts
@@ -155,7 +158,7 @@ def convert_data_values_to_uri_safe_values(
             _overwrite_labels_for_columns(
                 cube,
                 [dimension_column],
-                map_attr_val_labels_to_uri_identifiers,
+                map_dim_val_labels_to_uri_identifiers,
                 raise_missing_value_exceptions,
             )
 

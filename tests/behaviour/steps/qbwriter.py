@@ -1,3 +1,5 @@
+from genericpath import exists
+from http.client import OK
 from typing import List
 from urllib.parse import urlparse
 import pandas as pd
@@ -154,7 +156,7 @@ def step_impl(context, cube_name: str, csvw_file_path: str):
     ]
 
     csv_path, _, _ = extract_code_list_concept_scheme_info(csvw_path)
-    code_list_data, data_loading_errors = read_csv(csv=csvw_path.parent / csv_path)
+    code_list_data, data_loading_errors = read_csv(csvw_path.parent / csv_path)
     code_list_values = code_list_data["Notation"].sample(3, random_state=1)
 
     context.data_loading_errors = data_loading_errors
@@ -427,6 +429,7 @@ def step_impl(context, file: str):
 def step_impl(context):
     writer = QbWriter(context.cube)
     temp_dir = get_context_temp_dir_path(context)
+    
     writer.write(temp_dir)
     context.csv_file_name = writer.csv_file_name
 

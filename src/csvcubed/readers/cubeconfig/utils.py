@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Union, Tuple, List
+from typing import Dict, List, Optional, Tuple, Union
 from pandas import DataFrame
 
 from csvcubed.utils.json import load_json_document
@@ -22,6 +22,7 @@ def load_resource(resource_path: Union[str, Path]) -> dict:
         resource_path = resource_path.resolve()
     return load_json_document(resource_path)
 
+
 def generate_title_from_file_name(csv_path: Path) -> str:
     """
     Formats a file Path, stripping -_ and returning the capitalised file name without extn
@@ -35,17 +36,20 @@ def generate_title_from_file_name(csv_path: Path) -> str:
     )
 
 
-def read_and_check_csv(csv_path: Path) -> Tuple[DataFrame, List[ValidationError]]:
+def read_and_check_csv(
+    csv_path: Path, dtype: Optional[Dict[str, str]] = None
+) -> Tuple[DataFrame, List[ValidationError]]:
     """
     Reads the csv data file and performs rudimentary checks.
     """
-    data, data_errors = read_csv(csv_path)
+
+    data, data_errors = read_csv(csv_path, dtype=dtype)
 
     if isinstance(data, DataFrame):
-        if data.shape[0] < 2:
+        if len(data) == 0:
             # Must have 2 or more rows, a heading row and a data row
             raise ValueError(
-                "CSV input must contain header row and at least one row of data"
+                "CSV input must contain header row and at least one row of data "
             )
     else:
         raise TypeError("There was a problem reading the csv file as a dataframe")

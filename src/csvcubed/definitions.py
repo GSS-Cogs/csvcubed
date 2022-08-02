@@ -5,16 +5,13 @@ Definitions
 Defines the root project path as well as holding the constants that represent uri templates special properties.
 """
 
-import os
 from pathlib import Path
 
 """
 Defines a variable to the project root path.
-Ref: https://stackoverflow.com/questions/25389095/python-get-path-of-root-project-structure/25389715#25389715
-
 **Must not be used to refer to anything that is not bundled into the whl package**.
 """
-APP_ROOT_DIR_PATH = Path(os.path.dirname(os.path.abspath(__file__)))
+APP_ROOT_DIR_PATH = Path(__file__).parent.resolve()
 
 
 # Special properties that are valid without definition in all uri templates
@@ -24,5 +21,5 @@ URI_TEMPLATE_SPECIAL_PROPERTIES = [
     "_sourceColumn",
     "_row",
     "_sourceRow",
-    "_name"
+    "_name",
 ]

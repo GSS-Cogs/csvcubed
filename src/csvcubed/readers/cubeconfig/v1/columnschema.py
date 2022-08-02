@@ -18,7 +18,6 @@ import uritemplate
 from jsonschema.exceptions import ValidationError
 
 from csvcubedmodels.dataclassbase import DataClassBase
-from csvcubed.models.cube.qb.components.measure import QbMeasure
 
 from csvcubed.utils.validators.schema import validate_dict_against_schema
 from csvcubed.inputs import pandas_input_to_columnar_optional_str

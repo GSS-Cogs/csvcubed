@@ -12,6 +12,8 @@ from dataclasses import field
 from pathlib import Path
 from typing import Tuple, Dict, Any, List, Iterable, Set
 
+import pandas as pd
+
 from csvcubedmodels.rdf.dependency import RdfGraphDependency
 from csvcubedmodels import rdf
 from csvcubedmodels.rdf import skos, rdfs
@@ -89,10 +91,20 @@ class QbWriter(WriterBase):
         # Map all labels to their corresponding URI-safe-values, where possible.
         # Also converts all appropriate columns to the pandas categorical format.
 
-        _logger.info("Beginning CSV-W Generation")
-
+        _logger.info(f"Beginning CSV-W Generation: {self.csv_file_name}")
+        
         ensure_int_columns_are_ints(self.cube)
 
+        # Bring the pandas representation of bolleans inline with what the csvw spec requires
+        # True != true, False != false
+        assert isinstance(self.cube.data, pd.DataFrame)
+        for pandas_column_label in self.cube.data.columns.values:
+            if self.cube.data[pandas_column_label].dtype == "bool":
+                self.cube.data[pandas_column_label] = self.cube.data[pandas_column_label].apply(
+                    lambda x: "true" if x is True else "false" if x is False else x
+                )
+
+        _logger.info('Calling data values to uri safe values')
         convert_data_values_to_uri_safe_values(
             self.cube, self.raise_missing_uri_safe_value_exceptions
         )

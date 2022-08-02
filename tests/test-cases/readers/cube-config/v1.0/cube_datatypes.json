@@ -1,0 +1,125 @@
+{
+    "$schema": "https://purl.org/csv-cubed/qube-config/v1.0",
+    "columns": {
+        "Dim-0": {"label": "Non Dimension", "type": "dimension", "code_list": true},
+        "Dim-1": {"type": "dimension", "label": "Period Dimension"},
+        "Dim-2": {
+            "type": "dimension",
+            "label": "Trade Direction Dimension",
+            "code_list": true
+        },
+        "Attr-anyURI": {
+            "type": "attribute",
+            "label": "anyURI attribute",
+            "data_type": "anyURI"
+        },
+        "Attr-boolean": {
+            "type": "attribute",
+            "label": "boolean attribute",
+            "data_type": "boolean"
+        },
+        "Attr-decimal": {
+            "type": "attribute",
+            "label": "decimal attribute",
+            "data_type": "decimal"
+        },
+        "Attr-integer": {
+            "type": "attribute",
+            "label": "integer attribute",
+            "data_type": "integer"
+        },
+        "Attr-long": {
+            "type": "attribute",
+            "label": "long attribute",
+            "data_type": "long"
+        },
+        "Attr-int": {
+            "type": "attribute",
+            "label": "int attribute",
+            "data_type": "int"
+        },
+        "Attr-short": {
+            "type": "attribute",
+            "label": "short attribute",
+            "data_type": "short"
+        },
+        "Attr-nonNegativeInteger": {
+            "type": "attribute",
+            "label": "nonNegativeInteger attribute",
+            "data_type": "nonNegativeInteger"
+        },
+        "Attr-positiveInteger": {
+            "type": "attribute",
+            "label": "positiveInteger attribute",
+            "data_type": "positiveInteger"
+        },
+        "Attr-unsignedLong": {
+            "type": "attribute",
+            "label": "unsignedLong attribute",
+            "data_type": "unsignedLong"
+        },
+        "Attr-unsignedInt": {
+            "type": "attribute",
+            "label": "unsignedInt attribute",
+            "data_type": "unsignedInt"
+        },
+        "Attr-unsignedShort": {
+            "type": "attribute",
+            "label": "unsignedShort attribute",
+            "data_type": "unsignedShort"
+        },
+        "Attr-nonPositiveInteger": {
+            "type": "attribute",
+            "label": "nonPositiveInteger attribute",
+            "data_type": "nonPositiveInteger"
+        },
+        "Attr-negativeInteger": {
+            "type": "attribute",
+            "label": "negativeInteger attribute",
+            "data_type": "negativeInteger"
+        },
+        "Attr-double": {
+            "type": "attribute",
+            "label": "double attribute",
+            "data_type": "double"
+        },
+        "Attr-float": {
+            "type": "attribute",
+            "label": "float attribute",
+            "data_type": "float"
+        },
+        "Attr-string": {
+            "type": "attribute",
+            "label": "string attribute",
+            "data_type": "string"
+        },
+        "Attr-language": {
+            "type": "attribute",
+            "label": "language attribute",
+            "data_type": "language"
+        },
+        "Attr-date": {
+            "type": "attribute",
+            "label": "date attribute",
+            "data_type": "date"
+        },
+        "Attr-dateTime": {
+            "type": "attribute",
+            "label": "dateTime attribute",
+            "data_type": "dateTime"
+        },
+        "Attr-dateTimeStamp": {
+            "type": "attribute",
+            "label": "dateTimeStamp attribute",
+            "data_type": "dateTimeStamp"
+        },
+        "Attr-time": {
+            "type": "attribute",
+            "label": "time attribute",
+            "data_type": "time"
+        },
+        "Value": {"type": "observations", "data_type": "integer"},
+        "Measure": {"type": "measures", "values": true},
+        "Units": {"type": "units", "values": true}
+    }
+}

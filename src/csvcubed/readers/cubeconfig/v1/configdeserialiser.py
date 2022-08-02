@@ -32,40 +32,15 @@ from csvcubed.readers.catalogmetadata.v1.catalog_metadata_reader import (
 from csvcubed.readers.cubeconfig.v1.mapcolumntocomponent import (
     map_column_to_qb_component,
 )
+from csvcubed.readers.cubeconfig.v1 import datatypes
 
+from .constants import CONVENTION_NAMES
 
 # Used to determine whether a column name matches accepted conventions
 from ...preconfiguredtemplates import apply_preconfigured_values_from_template
 
-CONVENTION_NAMES = {
-    "measures": {
-        "measure",
-        "measures",
-        "measures column",
-        "measure column",
-        "measure type",
-        "measure types",
-    },
-    "observations": {
-        "observation",
-        "observations",
-        "obs",
-        "values",
-        "value",
-        "val",
-        "vals",
-    },
-    "units": {
-        "unit",
-        "units",
-        "units column",
-        "unit column",
-        "unit type",
-        "unit types",
-    },
-}
 
-log = logging.getLogger(__name__)
+_logger = logging.getLogger(__name__)
 
 
 def get_deserialiser(
@@ -85,7 +60,6 @@ def get_deserialiser(
         Generates a Cube structure from a config.json input.
         :return: tuple of cube and json schema errors (if any)
         """
-        data, data_errors = read_and_check_csv(csv_path)
 
         # If we have a config json file then load it and validate against its reference schema
         if config_path:
@@ -98,8 +72,8 @@ def get_deserialiser(
                 schema_validation_errors = validate_dict_against_schema(
                     value=config, schema=schema
                 )
-            except JSONDecodeError as err:
-                log.warning(
+            except JSONDecodeError:
+                _logger.warning(
                     "Validation of the config json is not currently available, continuing without validation."
                 )
                 schema_validation_errors = []
@@ -108,6 +82,10 @@ def get_deserialiser(
         else:
             config = {"title": generate_title_from_file_name(csv_path)}
             schema_validation_errors = []
+
+        dtype = datatypes.get_pandas_datatypes(csv_path, config=config)
+        _logger.info(f'csv {csv_path} has mapping of columns to datatypes: {dtype}')
+        data, data_errors = read_and_check_csv(csv_path, dtype=dtype)
 
         (cube, code_list_schema_validation_errors) = _get_cube_from_config_json_dict(
             data,

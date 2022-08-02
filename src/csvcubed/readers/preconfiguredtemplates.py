@@ -14,6 +14,8 @@ from csvcubed.utils.uri import csvw_column_name_safe
 
 TEMPLATE_BASE_URL = "https://purl.org/csv-cubed/qube-config/templates"
 
+_logger = logging.getLogger(__name__)
+
 
 def _get_template_file_from_template_lookup(template_value: str) -> str:
     """
@@ -21,7 +23,7 @@ def _get_template_file_from_template_lookup(template_value: str) -> str:
     """
     template_lookup_url = f"{TEMPLATE_BASE_URL}/preset_column_config.json"
     template_lookup_response = session.get(template_lookup_url)
-    logging.debug("The template lookup/index file: %s", template_lookup_url)
+    _logger.debug("The template lookup/index file: %s", template_lookup_url)
 
     if not template_lookup_response.ok:
         raise HTTPError(
@@ -73,7 +75,7 @@ def apply_preconfigured_values_from_template(
     """
     # if column_config doesn't have the `from_template` property, just terminate the function now
     if "from_template" not in column_config:
-        logging.debug("Column config has no preset template to collect from.")
+        _logger.debug('Column config for "%s" has no preset template to collect from.', column_name)
         return
 
     # if column_config has `from_template` property, extract that value

@@ -25,6 +25,7 @@ from csvcubed.inputs import PandasDataTypes, pandas_input_to_columnar_optional_s
 from .datastructuredefinition import (
     QbColumnStructuralDefinition,
 )
+from csvcubed.models.cube.qb.components.constants import ACCEPTED_DATATYPE_MAPPING
 from csvcubed.models.uriidentifiable import UriIdentifiable
 from csvcubed.models.validationerror import ValidationError
 from csvcubed.utils.uri import uri_safe
@@ -198,32 +199,6 @@ class NewQbAttribute(QbAttribute, UriIdentifiable):
         return self._validate_data_new_attribute_values(data)
 
 
-accepted_data_types = {
-    "anyURI",
-    "boolean",
-    "date",
-    "dateTime",
-    "dateTimeStamp",
-    "decimal",
-    "integer",
-    "long",
-    "int",
-    "short",
-    "nonNegativeInteger",
-    "positiveInteger",
-    "unsignedLong",
-    "unsignedInt",
-    "unsignedShort",
-    "nonPositiveInteger",
-    "negativeInteger",
-    "double",
-    "float",
-    "string",
-    "language",
-    "time",
-}
-
-
 @dataclass
 class QbAttributeLiteral(QbAttribute, ABC):
     """A literal attribute allows for a non-uri-based resource to be referenced in attributes. Acceptable types
@@ -234,7 +209,7 @@ class QbAttributeLiteral(QbAttribute, ABC):
 
     @validator("data_type", pre=True, always=False)
     def data_type_value(cls, data_type):
-        if data_type not in accepted_data_types:
+        if data_type not in ACCEPTED_DATATYPE_MAPPING:
             raise ValueError(f"Literal type '{data_type}' not supported")
         return data_type
 
