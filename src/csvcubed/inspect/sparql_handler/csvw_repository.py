@@ -17,6 +17,7 @@ from csvcubed.inspect.sparql_handler.sparql import path_to_file_uri_for_rdflib
 from csvcubed.inspect.sparql_handler.sparqlquerymanager import (
     ask_is_csvw_code_list,
     ask_is_csvw_qb_dataset,
+    select_build_information,
     select_column_definitions,
     select_csvw_catalog_metadata,
     select_table_schema_properties,
@@ -25,6 +26,7 @@ from csvcubed.models.csvwtype import CSVWType
 from csvcubed.models.inspect.sparqlresults import (
     CatalogMetadataResult,
     ColumnDefinition,
+    CsvcubedVersionResult,
     TableSchemaPropertiesResult,
 )
 from csvcubed.utils.dict import get_from_dict_ensure_exists
@@ -99,6 +101,14 @@ class CsvWRepository:
             results_dict[result.csv_url] = result
         return results_dict
 
+    @cached_property
+    def build_information(self) -> List[CsvcubedVersionResult]:
+        """
+        Cached property for the select_build_information query.
+        """
+        results = select_build_information(self.rdf_graph)
+        return results
+
     def get_column_definitions_for_csv(self, csv_url: str) -> List[ColumnDefinition]:
         """
         Returns the `ColumnDefinition`s for a given csv file, raises a KeyError if the csv_url
@@ -128,4 +138,11 @@ class CsvWRepository:
         result: TableSchemaPropertiesResult = get_from_dict_ensure_exists(
             self._table_schema_properties, csv_url
         )
+        return result
+
+    def get_build_information(self) -> List[CsvcubedVersionResult]:
+        """
+        Returns the csvcubed build activity and GitHub version used to build a given cube.
+        """
+        result: List[CsvcubedVersionResult] = self.build_information
         return result

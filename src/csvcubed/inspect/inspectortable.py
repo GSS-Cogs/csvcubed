@@ -49,7 +49,7 @@ class DataCubeTable(MetadataInspector, TableInspector):
     def _get_dataset_uri(self) -> str:
         return self.data_cube_repository.get_cube_identifiers_for_csv(
             self.csv_url
-        ).data_set_url
+        ).dataset_url
 
     def _get_columns(self) -> OrderedDict[str, DataCubeColumn]:
         columns = OrderedDict[str, DataCubeColumn]()

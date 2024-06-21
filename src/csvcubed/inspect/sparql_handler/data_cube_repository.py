@@ -22,7 +22,7 @@ from csvcubed.inspect.sparql_handler.code_list_repository import CodeListReposit
 from csvcubed.inspect.sparql_handler.csvw_repository import CsvWRepository
 from csvcubed.inspect.sparql_handler.sparqlquerymanager import (
     select_csvw_dsd_qube_components,
-    select_data_set_dsd_and_csv_url,
+    select_dataset_dsd_and_csv_url,
     select_dsd_code_list_and_cols,
     select_is_pivoted_shape_data_set,
     select_labels_for_resource_uris,
@@ -95,7 +95,7 @@ class DataCubeRepository:
 
         Maps from csv_url to the identifiers.
         """
-        results = select_data_set_dsd_and_csv_url(self.csvw_repository.rdf_graph)
+        results = select_dataset_dsd_and_csv_url(self.csvw_repository.rdf_graph)
         results_dict: Dict[str, CubeTableIdentifiers] = {}
         for result in results:
             results_dict[result.csv_url] = result
@@ -188,26 +188,26 @@ class DataCubeRepository:
 
     def get_cube_identifiers_for_csv(self, csv_url: str) -> CubeTableIdentifiers:
         """
-        Get csv url, data set uri, data set label and DSD uri for the given csv url.
+        Get CSV URL, dataset URI and DSD URI for the given csv url.
         """
         result: CubeTableIdentifiers = get_from_dict_ensure_exists(
             self._cube_table_identifiers, csv_url
         )
         return result
 
-    def get_cube_identifiers_for_data_set(
-        self, data_set_uri: str
+    def get_cube_identifiers_for_dataset(
+        self, dataset_uri: str
     ) -> CubeTableIdentifiers:
         """
-        Get csv url, data set uri, data set label and DSD uri for the given data set uri.
+        Get CSV URL, dataset URI and DSD URI for the given dataset URI.
         """
 
         result = first(
             self._cube_table_identifiers.values(),
-            lambda i: i.data_set_url == data_set_uri,
+            lambda i: i.dataset_url == dataset_uri,
         )
         if result is None:
-            raise KeyError(f"Could not find the data_set with URI '{data_set_uri}'.")
+            raise KeyError(f"Could not find the dataset with URI '{dataset_uri}'.")
 
         return result
 
@@ -321,8 +321,8 @@ class DataCubeRepository:
         data cube.
         """
         primary_catalog_metadata = self.csvw_repository.get_primary_catalog_metadata()
-        return self.get_cube_identifiers_for_data_set(
-            primary_catalog_metadata.dataset_uri
+        return self.get_cube_identifiers_for_dataset(
+            primary_catalog_metadata.distribution_uri
         ).csv_url
 
     def get_dataframe(

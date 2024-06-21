@@ -4,6 +4,7 @@ CSV-qb Writer
 
 Output writer for CSV-qb
 """
+
 import itertools
 import json
 import logging
@@ -107,7 +108,7 @@ class QbWriter(WriterBase):
 
         csvw_metadata = {
             "@context": "http://www.w3.org/ns/csvw",
-            "@id": self._uris.get_dataset_uri(),
+            "@id": self._uris.get_distribution_uri(),
             "tables": tables,
             "rdfs:seeAlso": self._dsd.generate_data_structure_definitions(),
         }
@@ -322,7 +323,7 @@ class QbWriter(WriterBase):
                 "virtual": True,
                 "aboutUrl": observation_uri,
                 "propertyUrl": "qb:dataSet",
-                "valueUrl": self._uris.get_dataset_uri(),
+                "valueUrl": self._uris.get_distribution_uri(),
             }
         )
 
@@ -395,7 +396,7 @@ class QbWriter(WriterBase):
                 "name": "virt_dataset",
                 "virtual": True,
                 "propertyUrl": "http://purl.org/linked-data/cube#dataSet",
-                "valueUrl": self._uris.get_dataset_uri(),
+                "valueUrl": self._uris.get_distribution_uri(),
             },
         ]
         unit = obs_val.unit

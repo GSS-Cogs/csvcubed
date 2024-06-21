@@ -1,0 +1,10 @@
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX qb: <http://purl.org/linked-data/cube#>
+
+SELECT ?dataset ?buildActivity ?csvcubedVersion
+WHERE {
+    ?dataset a qb:DataSet;
+        prov:wasGeneratedBy ?buildActivity.
+    ?buildActivity a prov:Activity;
+        prov:used ?csvcubedVersion.
+}

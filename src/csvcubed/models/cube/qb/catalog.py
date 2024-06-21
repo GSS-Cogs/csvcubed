@@ -2,6 +2,7 @@
 Catalog Metadata (DCAT)
 -----------------------
 """
+
 import json
 from dataclasses import dataclass, field
 from datetime import date, datetime, time
@@ -75,6 +76,14 @@ class CatalogMetadata(CatalogMetadataBase, UriIdentifiable):
 
     def get_identifier(self) -> str:
         return self.identifier or self.title
+
+    def configure_dcat_distribution(self, distribution: dcat.Distribution) -> None:
+        dt_now = datetime.now()
+        dt_issued = _convert_date_to_date_time(self.dataset_issued or dt_now)
+        distribution.issued = dt_issued
+        distribution.label = distribution.title = self.title
+        distribution.identifier = self.get_identifier()
+        distribution.creator = self.creator_uri
 
     def configure_dcat_dataset(self, dataset: dcat.Dataset) -> None:
         dt_now = datetime.now()

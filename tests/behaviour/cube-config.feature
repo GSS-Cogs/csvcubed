@@ -654,7 +654,7 @@ Feature: cube-config.json
       <#dimension/sector> sector:services;
       <#dimension/year> year:2021;
       <#measure/imports-monetary-value> 150.0;
-      qb:dataSet <#dataset>;
+      qb:dataSet <#qbDataSet>;
       qb:measureType <#measure/imports-monetary-value>;
       sdmxa:unitMeasure <#unit/pounds-millions> .
 
@@ -663,7 +663,7 @@ Feature: cube-config.json
       <#dimension/sector> sector:services;
       <#dimension/year> year:2021;
       <#measure/exports-monetary-value> 80.0;
-      qb:dataSet <#dataset>;
+      qb:dataSet <#qbDataSet>;
       qb:measureType <#measure/exports-monetary-value>;
       sdmxa:unitMeasure <#unit/pounds-millions>.
     """
@@ -689,7 +689,7 @@ Feature: cube-config.json
         <#dimension/sector> sector:services;
         <#dimension/year> year:2021;
         <#measure/imports-monetary-value> 150.0;
-        qb:dataSet <#dataset>;
+        qb:dataSet <#qbDataSet>;
         qb:measureType <#measure/imports-monetary-value>;
         sdmxa:unitMeasure <#unit/pounds-millions> .
 
@@ -698,7 +698,7 @@ Feature: cube-config.json
         <#dimension/sector> sector:services;
         <#dimension/year> year:2021;
         <#measure/exports-monetary-value> 80.0;
-        qb:dataSet <#dataset>;
+        qb:dataSet <#qbDataSet>;
         qb:measureType <#measure/exports-monetary-value>;
         sdmxa:unitMeasure <#unit/pounds-millions>.
     """

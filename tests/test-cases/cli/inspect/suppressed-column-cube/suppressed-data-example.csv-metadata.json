@@ -1,6 +1,6 @@
 {
     "@context": "http://www.w3.org/ns/csvw",
-    "@id": "suppressed-data-example.csv#dataset",
+    "@id": "suppressed-data-example.csv#qbDataSet",
     "tables": [
         {
             "url": "suppressed-data-example.csv",
@@ -77,7 +77,7 @@
                         "virtual": true,
                         "aboutUrl": "suppressed-data-example.csv#obs/{location}@bin-inventory",
                         "propertyUrl": "qb:dataSet",
-                        "valueUrl": "suppressed-data-example.csv#dataset"
+                        "valueUrl": "suppressed-data-example.csv#qbDataSet"
                     }
                 ],
                 "foreignKeys": [
@@ -102,18 +102,6 @@
         }
     ],
     "rdfs:seeAlso": [
-        {
-            "@id": "suppressed-data-example.csv#csvcubed-build-activity",
-            "@type": [
-                "http://www.w3.org/2000/01/rdf-schema#Resource",
-                "http://www.w3.org/ns/prov#Activity"
-            ],
-            "http://www.w3.org/ns/prov#used": [
-                {
-                    "@id": "https://github.com/GSS-Cogs/csvcubed/releases/tag/v0.1.0.dev0"
-                }
-            ]
-        },
         {
             "@id": "suppressed-data-example.csv#measure/bin-inventory",
             "@type": [
@@ -200,8 +188,6 @@
             "@id": "suppressed-data-example.csv#dataset",
             "@type": [
                 "http://www.w3.org/2000/01/rdf-schema#Resource",
-                "http://purl.org/linked-data/cube#Attachable",
-                "http://purl.org/linked-data/cube#DataSet",
                 "http://www.w3.org/ns/dcat#Dataset",
                 "http://www.w3.org/ns/dcat#Resource"
             ],
@@ -239,9 +225,86 @@
                     "@value": "Suppressed Data Example"
                 }
             ],
+            "http://www.w3.org/ns/dcat#distribution": [
+                {
+                    "@id": "suppressed-data-example.csv#qbDataSet"
+                }
+            ]
+        },
+        {
+            "@id": "suppressed-data-example.csv#qbDataSet",
+            "@type": [
+                "http://purl.org/linked-data/cube#Attachable",
+                "http://www.w3.org/ns/dcat#Distribution",
+                "http://www.w3.org/ns/dcat#Resource",
+                "http://purl.org/linked-data/cube#DataSet",
+                "http://www.w3.org/2000/01/rdf-schema#Resource"
+            ],
+            "http://purl.org/dc/terms/creator": [
+                {
+                    "@id": "https://www.gov.uk/government/organisations/office-for-national-statistics"
+                }
+            ],
+            "http://purl.org/dc/terms/identifier": [
+                {
+                    "@value": "Suppressed Data Example"
+                }
+            ],
+            "http://purl.org/dc/terms/issued": [
+                {
+                    "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+                    "@value": "2023-03-10T11:21:07.714922"
+                }
+            ],
+            "http://purl.org/linked-data/cube#structure": [
+                {
+                    "@id": "suppressed-data-example.csv#structure"
+                }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#label": [
+                {
+                    "@language": "en",
+                    "@value": "Suppressed Data Example"
+                }
+            ],
+            "http://www.w3.org/ns/dcat#isDistributionOf": [
+                {
+                    "@id": "suppressed-data-example.csv#dataset"
+                }
+            ],
             "http://www.w3.org/ns/prov#wasGeneratedBy": [
                 {
                     "@id": "suppressed-data-example.csv#csvcubed-build-activity"
+                }
+            ]
+        },
+        {
+            "@id": "suppressed-data-example.csv#csvcubed-build-activity",
+            "@type": [
+                "http://www.w3.org/ns/prov#Activity",
+                "http://www.w3.org/2000/01/rdf-schema#Resource"
+            ],
+            "http://www.w3.org/ns/prov#used": [
+                {
+                    "@id": "https://github.com/GSS-Cogs/csvcubed/releases/tag/v0.1.0.dev0"
+                }
+            ]
+        },
+        {
+            "@id": "https://github.com/GSS-Cogs/csvcubed/releases/tag/v0.1.0.dev0",
+            "@type": [
+                "http://www.w3.org/ns/prov#Entity",
+                "http://www.w3.org/2000/01/rdf-schema#Resource"
+            ],
+            "http://purl.org/dc/terms/title": [
+                {
+                    "@language": "en",
+                    "@value": "csvcubed v0.1.0.dev0"
+                }
+            ],
+            "http://www.w3.org/ns/prov#hasPrimarySource": [
+                {
+                    "@id": "https://pypi.org/project/csvcubed/0.1.0.dev0/"
                 }
             ]
         },

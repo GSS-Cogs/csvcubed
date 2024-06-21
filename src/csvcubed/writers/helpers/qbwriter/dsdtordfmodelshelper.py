@@ -4,9 +4,10 @@ QB DSD Helper
 
 Help Generate the DSD necessary for an RDF Data Cube.
 """
+
 import logging
 from dataclasses import dataclass, field
-from typing import Iterable, List, Set
+from typing import Iterable, List, Set, Tuple
 
 from csvcubedmodels import rdf
 from csvcubedmodels.rdf import (
@@ -62,7 +63,11 @@ from csvcubed.models.rdf.newunitresource import NewUnitResource
 from csvcubed.models.rdf.qbdatasetincatalog import QbDataSetInCatalog
 from csvcubed.utils.dict import rdf_resource_to_json_ld
 from csvcubed.utils.uri import get_data_type_uri_from_str, get_last_uri_part
-from csvcubed.utils.version import get_csvcubed_version_uri
+from csvcubed.utils.version import (
+    get_csvcubed_version_string,
+    get_csvcubed_version_uri,
+    get_pypi_release_url,
+)
 from csvcubed.writers.helpers.skoscodelistwriter.newresourceurigenerator import (
     NewResourceUriGenerator as SkosCodeListNewResourceUriGenerator,
 )
@@ -87,7 +92,16 @@ class DsdToRdfModelsHelper:
         """
         :return: the additional RDF metadata to be serialised in the CSV-W.
         """
+
         see_also = rdf_resource_to_json_ld(self._generate_qb_dataset_dsd_definitions())
+
+        see_also += rdf_resource_to_json_ld(
+            self._get_dcat_dataset_with_catalog_metadata()
+        )
+
+        see_also += rdf_resource_to_json_ld(self._get_generation_activity())
+
+        see_also += rdf_resource_to_json_ld(self._get_generation_entity())
 
         for dependencies in self._get_rdf_file_dependencies():
             see_also += rdf_resource_to_json_ld(dependencies)
@@ -254,16 +268,30 @@ class DsdToRdfModelsHelper:
 
         return new_unit_resources
 
-    def _generate_qb_dataset_dsd_definitions(self) -> QbDataSetInCatalog:
-        dataset = self._get_qb_dataset_with_catalog_metadata()
+    def _generate_qb_dataset_dsd_definitions(
+        self,
+    ) -> QbDataSetInCatalog:
+        qb_dataset = self._get_qb_dataset()
+        qb_dataset.is_distribution_of = ExistingResource(
+            self._uris.get_dataset_uri()
+        ).uri
 
-        generation_activity = prov.Activity(self._uris.get_build_activity_uri())
-        generation_activity.used = ExistingResource(get_csvcubed_version_uri())
-        dataset.was_generated_by = generation_activity
+        qb_dataset.was_generated_by = ExistingResource(
+            self._uris.get_build_activity_uri()
+        ).uri
 
-        dataset.structure = rdf.qb.DataStructureDefinition(
+        # TODO update qube-config to be able to serialise following properties
+        # qb_dataset.created = "datetime"
+        # qb_dataset.download_url = "str"
+        # qb_dataset.byte_size = "integer"
+        # qb_dataset.media_type = "str"
+        # qb_dataset.described_by = "str"
+        # qb_dataset.checksum = "str"
+
+        qb_dataset.structure = rdf.qb.DataStructureDefinition(
             self._uris.get_structure_uri()
         )
+
         component_ordinal = 1
         for column in self.cube.columns:
             if isinstance(column, QbColumn):
@@ -273,24 +301,43 @@ class DsdToRdfModelsHelper:
                 component_properties_for_col = [
                     p for s in component_specs_for_col for p in s.componentProperties
                 ]
-                dataset.structure.componentProperties |= set(
+                qb_dataset.structure.componentProperties |= set(
                     component_properties_for_col
                 )
                 for component in component_specs_for_col:
                     component.order = component_ordinal
                     component_ordinal += 1
 
-                dataset.structure.components |= set(component_specs_for_col)
+                qb_dataset.structure.components |= set(component_specs_for_col)
 
         if self.cube.is_pivoted_shape:
-            dataset.structure.sliceKey.add(self._get_cross_measures_slice_key())
+            qb_dataset.structure.sliceKey.add(self._get_cross_measures_slice_key())
 
-        return dataset
+        return qb_dataset
 
-    def _get_qb_dataset_with_catalog_metadata(self) -> QbDataSetInCatalog:
-        qb_dataset_with_metadata = QbDataSetInCatalog(self._uris.get_dataset_uri())
-        self.cube.metadata.configure_dcat_dataset(qb_dataset_with_metadata)
-        return qb_dataset_with_metadata
+    def _get_qb_dataset(self) -> QbDataSetInCatalog:
+        qb_dataset = QbDataSetInCatalog(self._uris.get_distribution_uri())
+        self.cube.metadata.configure_dcat_distribution(qb_dataset)
+        return qb_dataset
+
+    def _get_dcat_dataset_with_catalog_metadata(self) -> rdf.dcat.Dataset:
+        dcat_dataset_with_metadata = rdf.dcat.Dataset(self._uris.get_dataset_uri())
+        self.cube.metadata.configure_dcat_dataset(dcat_dataset_with_metadata)
+        dcat_dataset_with_metadata.distribution.add(
+            ExistingResource(self._uris.get_distribution_uri()).uri  # type: ignore
+        )
+        return dcat_dataset_with_metadata
+
+    def _get_generation_activity(self) -> prov.Activity:
+        generation_activity = prov.Activity(self._uris.get_build_activity_uri())
+        generation_activity.used = ExistingResource(get_csvcubed_version_uri())
+        return generation_activity
+
+    def _get_generation_entity(self) -> prov.Entity:
+        generation_entity = prov.Entity(get_csvcubed_version_uri())
+        generation_entity.title = get_csvcubed_version_string()
+        generation_entity.has_primary_source = ExistingResource(get_pypi_release_url())
+        return generation_entity
 
     def _get_cross_measures_slice_key(self) -> rdf.qb.SliceKey:
         # Setting up Slice Key for slices which range over measures.

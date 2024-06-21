@@ -102,12 +102,12 @@ def test_get_cube_identifiers_for_data_set_error():
     data_cube_repository = get_data_cube_repository(csvw_metadata_json_path)
 
     with pytest.raises(KeyError) as exception:
-        cube_identifers = data_cube_repository.get_cube_identifiers_for_data_set(
-            data_set_uri=""
+        cube_identifers = data_cube_repository.get_cube_identifiers_for_dataset(
+            dataset_uri=""
         )
         assert cube_identifers is None
 
-    assert ("Could not find the data_set with URI ''.") in str(exception.value)
+    assert ("Could not find the dataset with URI ''.") in str(exception.value)
 
 
 def test_get_cube_identifiers_for_csv():
@@ -129,7 +129,7 @@ def test_get_cube_identifiers_for_csv():
 
     assert result is not None
     assert result.csv_url == "qb-id-10004.csv"
-    assert result.data_set_url == "qb-id-10004.csv#dataset"
+    assert result.dataset_url == "qb-id-10004.csv#qbDataSet"
     assert result.dsd_uri == "qb-id-10004.csv#structure"
 
 

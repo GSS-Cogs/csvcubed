@@ -1,6 +1,6 @@
 {
     "@context": "http://www.w3.org/ns/csvw",
-    "@id": "qb-id-10003.csv#dataset",
+    "@id": "qb-id-10003.csv#qbDataSet",
     "tables": [
         {
             "url": "qb-id-10003.csv",
@@ -96,7 +96,7 @@
                         "virtual": true,
                         "aboutUrl": "qb-id-10003.csv#obs/{some_dimension}@some-measure",
                         "propertyUrl": "qb:dataSet",
-                        "valueUrl": "qb-id-10003.csv#dataset"
+                        "valueUrl": "qb-id-10003.csv#qbDataSet"
                     },
                     {
                         "name": "virt_obs_some_other_obs_val",
@@ -130,7 +130,7 @@
                         "virtual": true,
                         "aboutUrl": "qb-id-10003.csv#obs/{some_dimension}@some-other-measure",
                         "propertyUrl": "qb:dataSet",
-                        "valueUrl": "qb-id-10003.csv#dataset"
+                        "valueUrl": "qb-id-10003.csv#qbDataSet"
                     }
                 ],
                 "foreignKeys": [
@@ -158,10 +158,8 @@
         {
             "@id": "qb-id-10003.csv#dataset",
             "@type": [
-                "http://purl.org/linked-data/cube#DataSet",
                 "http://www.w3.org/2000/01/rdf-schema#Resource",
                 "http://www.w3.org/ns/dcat#Resource",
-                "http://purl.org/linked-data/cube#Attachable",
                 "http://www.w3.org/ns/dcat#Dataset"
             ],
             "http://purl.org/dc/terms/identifier": [
@@ -196,6 +194,54 @@
                 {
                     "@language": "en",
                     "@value": "Pivoted Shape Cube"
+                }
+            ],
+            "http://www.w3.org/ns/dcat#distribution": [
+                {
+                    "@id": "qb-id-10003.csv#qbDataSet"
+                }
+            ]
+        },
+        {
+            "@id": "qb-id-10003.csv#qbDataSet",
+            "@type": [
+                "http://purl.org/linked-data/cube#DataSet",
+                "http://www.w3.org/ns/dcat#Distribution",
+                "http://purl.org/linked-data/cube#Attachable",
+                "http://www.w3.org/ns/dcat#Resource",
+                "http://www.w3.org/2000/01/rdf-schema#Resource"
+            ],
+            "http://purl.org/dc/terms/created": [
+                {
+                    "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+                    "@value": "2022-11-24T11:45:07.291860"
+                }
+            ],
+            "http://purl.org/dc/terms/identifier": [
+                {
+                    "@value": "qb-id-10003"
+                }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#label": [
+                {
+                    "@language": "en",
+                    "@value": "Pivoted Shape Cube"
+                }
+            ],
+            "http://purl.org/dc/terms/issued": [
+                {
+                    "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+                    "@value": "2022-11-24T11:45:07.291860"
+                }
+            ],
+            "http://purl.org/linked-data/cube#structure": [
+                {
+                    "@id": "qb-id-10003.csv#structure"
+                }
+            ],
+            "http://www.w3.org/ns/dcat#isDistributionOf": [
+                {
+                    "@id": "qb-id-10003.csv#dataset"
                 }
             ],
             "http://www.w3.org/ns/prov#wasGeneratedBy": [
@@ -334,7 +380,25 @@
             ],
             "http://www.w3.org/ns/prov#used": [
                 {
-                    "@id": "https://github.com/GSS-Cogs/csvcubed/releases/tag/v0.1.0.dev0"
+                    "@id": "https://github.com/GSS-Cogs/csvcubed/releases/tag/v0.5.0"
+                }
+            ]
+        },
+        {
+            "@id": "https://github.com/GSS-Cogs/csvcubed/releases/tag/v0.5.0",
+            "@type": [
+                "http://www.w3.org/ns/prov#Entity",
+                "http://www.w3.org/2000/01/rdf-schema#Resource"
+            ],
+            "http://purl.org/dc/terms/title": [
+                {
+                    "@language": "en",
+                    "@value": "csvcubed v0.5.0"
+                }
+            ],
+            "http://www.w3.org/ns/prov#hasPrimarySource": [
+                {
+                    "@id": "https://pypi.org/project/csvcubed/0.5.0"
                 }
             ]
         },

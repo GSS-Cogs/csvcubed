@@ -282,11 +282,11 @@ def get_arguments_qb_dataset(
     """
     csvw_repository = data_cube_repository.csvw_repository
 
-    result_data_set_uri = (
-        data_cube_repository.csvw_repository.get_primary_catalog_metadata().dataset_uri
+    result_dataset_uri = (
+        data_cube_repository.csvw_repository.get_primary_catalog_metadata().distribution_uri
     )
-    identifiers = data_cube_repository.get_cube_identifiers_for_data_set(
-        result_data_set_uri
+    identifiers = data_cube_repository.get_cube_identifiers_for_dataset(
+        result_dataset_uri
     )
 
     result: QubeComponentsResult = data_cube_repository.get_dsd_qube_components_for_csv(
@@ -418,9 +418,9 @@ def test_get_measure_col_name_from_dsd_measure_col_present():
     data_cube_repository = get_data_cube_repository(csvw_metadata_json_path)
 
     result_data_set_uri = (
-        data_cube_repository.csvw_repository.get_primary_catalog_metadata().dataset_uri
+        data_cube_repository.csvw_repository.get_primary_catalog_metadata().distribution_uri
     )
-    identifiers = data_cube_repository.get_cube_identifiers_for_data_set(
+    identifiers = data_cube_repository.get_cube_identifiers_for_dataset(
         result_data_set_uri
     )
 
@@ -448,7 +448,7 @@ def test_get_measure_col_name_from_dsd_measure_col_not_present():
         data_cube_repository.csvw_repository.get_primary_catalog_metadata()
     )
 
-    identifiers = data_cube_repository.get_cube_identifiers_for_data_set(
+    identifiers = data_cube_repository.get_cube_identifiers_for_dataset(
         primary_catalog_metadata.dataset_uri
     )
 
@@ -476,8 +476,8 @@ def test_get_unit_col_name_from_dsd_unit_col_present():
         data_cube_repository.csvw_repository.get_primary_catalog_metadata()
     )
 
-    identifiers = data_cube_repository.get_cube_identifiers_for_data_set(
-        primary_catalog_metadata.dataset_uri
+    identifiers = data_cube_repository.get_cube_identifiers_for_dataset(
+        primary_catalog_metadata.distribution_uri
     )
 
     result: QubeComponentsResult = data_cube_repository.get_dsd_qube_components_for_csv(
@@ -504,7 +504,7 @@ def test_get_unit_col_name_from_dsd_unit_col_not_present():
         data_cube_repository.csvw_repository.get_primary_catalog_metadata()
     )
 
-    identifiers = data_cube_repository.get_cube_identifiers_for_data_set(
+    identifiers = data_cube_repository.get_cube_identifiers_for_dataset(
         primary_catalog_metadata.dataset_uri
     )
 
@@ -533,7 +533,7 @@ def test_get_single_measure_label_from_dsd():
         data_cube_repository.csvw_repository.get_primary_catalog_metadata()
     )
 
-    identifiers = data_cube_repository.get_cube_identifiers_for_data_set(
+    identifiers = data_cube_repository.get_cube_identifiers_for_dataset(
         primary_catalog_metadata.dataset_uri
     )
 

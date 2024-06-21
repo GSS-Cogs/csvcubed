@@ -437,7 +437,7 @@ def test_virtual_columns_generated_for_single_obs_val():
     assert virt_col["virtual"] == True
     assert virt_col["aboutUrl"] == "cube.csv#obs/{some_dimension}@some-measure"
     assert virt_col["propertyUrl"] == "qb:dataSet"
-    assert virt_col["valueUrl"] == "cube.csv#dataset"
+    assert virt_col["valueUrl"] == "cube.csv#qbDataSet"
 
 
 def test_virtual_columns_generated_for_multi_meas_obs_val():

@@ -59,6 +59,9 @@ class UriHelper:
     def get_dataset_uri(self) -> str:
         return self._new_resource_uri_generator.get_dataset_uri()
 
+    def get_distribution_uri(self) -> str:
+        return self._new_resource_uri_generator.get_distribution_uri()
+
     def get_slice_key_across_measures_uri(self) -> str:
         return self._new_resource_uri_generator.get_slice_key_across_measures_uri()
 

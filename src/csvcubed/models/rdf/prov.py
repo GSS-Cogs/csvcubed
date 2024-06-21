@@ -2,8 +2,9 @@
 PROV Ontology Models
 --------------------
 
-This module holds some models in the prov-o ontology. 
+This module holds some models in the prov-o ontology.
 """
+
 from typing import Annotated
 
 from csvcubedmodels.rdf import (
@@ -13,8 +14,10 @@ from csvcubedmodels.rdf import (
     Resource,
     Triple,
     map_resource_to_uri,
+    map_str_to_en_literal,
 )
 from csvcubedmodels.rdf.namespaces import PROV
+from rdflib import DCTERMS
 
 
 class Activity(NewResource):
@@ -43,6 +46,13 @@ class Entity(NewResource):
     was_generated_by: Annotated[
         Resource[Activity],
         Triple(PROV.wasGeneratedBy, PropertyStatus.optional, map_resource_to_uri),
+    ]
+    title: Annotated[
+        str, Triple(DCTERMS.title, PropertyStatus.recommended, map_str_to_en_literal)
+    ]
+    has_primary_source: Annotated[
+        Resource,
+        Triple(PROV.hasPrimarySource, PropertyStatus.recommended, map_resource_to_uri),
     ]
 
     def __init__(self, uri: str):

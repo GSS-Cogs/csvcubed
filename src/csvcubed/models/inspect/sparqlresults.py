@@ -32,9 +32,11 @@ class CatalogMetadataResult:
     """
 
     dataset_uri: str
-    """Data set here doesn't necessarily mean the qb:DataSet. It means either the qb:DataSet or the skos:ConceptScheme."""
+    """`dataset` here doesn't necessarily mean the dcat:DataSet. It means either the dcat:DataSet or the skos:ConceptScheme (which is also a dcat:Dataset)."""
     graph_uri: str
     """URI representing the graph in which the Catalog Metadata was found."""
+    distribution_uri: str
+    """URI of the qb:Dataset/dcat:Distribution"""
     title: str
     label: str
     issued: str
@@ -49,16 +51,17 @@ class CatalogMetadataResult:
     identifier: str
     comment: str
     description: str
+    was_generated_by: str
 
 
 @dataclass
 class CubeTableIdentifiers(DataClassBase):
     """
-    Links the CSV URL, DataSet URL, DataSet Label and DataStructureDefinition URI for a given cube.
+    Links the CSV URL, qb:Dataset URL, and DataStructureDefinition URI for a given cube.
     """
 
     csv_url: str
-    data_set_url: str
+    dataset_url: str
     dsd_uri: str
 
 
@@ -217,6 +220,13 @@ class ResourceURILabelResult:
     resource_label: str
 
 
+@dataclass
+class CsvcubedVersionResult:
+    dataset_url: str
+    build_activity: str
+    github_url: str
+
+
 def map_catalog_metadata_results(
     sparql_results: List[ResultRow],
 ) -> List[CatalogMetadataResult]:
@@ -238,6 +248,8 @@ def map_catalog_metadata_results(
             label=str(result_dict["label"]),
             issued=str(result_dict["issued"]),
             modified=str(result_dict["modified"]),
+            distribution_uri=none_or_map(result_dict.get("distribution"), str)
+            or "None",
             comment=none_or_map(result_dict.get("comment"), str) or "None",
             description=none_or_map(result_dict.get("description"), str) or "None",
             license=none_or_map(result_dict.get("license"), str) or "None",
@@ -248,6 +260,8 @@ def map_catalog_metadata_results(
             keywords=str(result_dict["keywords"]).split("|"),
             contact_point=none_or_map(result_dict.get("contactPoint"), str) or "None",
             identifier=none_or_map(result_dict.get("identifier"), str) or "None",
+            was_generated_by=none_or_map(result_dict.get("buildActivity"), str)
+            or "None",
         )
         results.append(result)
 
@@ -264,7 +278,7 @@ def map_data_set_dsd_csv_url_result(
     def map_row(row_result: Dict[str, Any]) -> CubeTableIdentifiers:
         return CubeTableIdentifiers(
             csv_url=str(row_result["csvUrl"]),
-            data_set_url=str(row_result["dataSet"]),
+            dataset_url=str(row_result["dataSet"]),
             dsd_uri=str(row_result["dsd"]),
         )
 
@@ -584,7 +598,6 @@ def map_labels_for_resource_uris(
     """
     Maps resource value uris to labels
     """
-
     results: Dict[str, str] = {}
     for row in sparql_results:
         if str(row["resourceValUri"]) in results:
@@ -616,3 +629,22 @@ def map_column_definition_results(
         )
 
     return [map_row(row.asdict()) for row in sparql_results]
+
+
+def map_build_activity_results(
+    sparql_results: List[ResultRow],
+) -> List[CsvcubedVersionResult]:
+    """
+    Map SPARQL query results to `CsvcubedVersionResult`s
+    """
+    results: List[CsvcubedVersionResult] = []
+    for row in sparql_results:
+        result_dict = row.asdict()
+
+        result = CsvcubedVersionResult(
+            dataset_url=str(result_dict["dataset"]),
+            build_activity=str(result_dict["buildActivity"]),
+            github_url=str(result_dict["csvcubedVersion"]),
+        )
+        results.append(result)
+    return results

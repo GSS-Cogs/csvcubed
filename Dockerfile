@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y default-jre
 
 # Install Apache JENA CLI tools for this.
 WORKDIR /
-ADD https://downloads.apache.org/jena/binaries/apache-jena-4.9.0.tar.gz /apache-jena.tar.gz
+ADD https://downloads.apache.org/jena/binaries/apache-jena-5.0.0.tar.gz /apache-jena.tar.gz
 RUN tar xvfz /apache-jena.tar.gz && \
     cd /apache-jena-* && \
     cp -r * /usr/local/ && \

@@ -1,6 +1,6 @@
 {
     "@context": "http://www.w3.org/ns/csvw",
-    "@id": "testing-converting-a-pivoted-csvw-to-pandas-dataframe.csv#dataset",
+    "@id": "testing-converting-a-pivoted-csvw-to-pandas-dataframe.csv#qbDataSet",
     "tables": [
         {
             "url": "testing-converting-a-pivoted-csvw-to-pandas-dataframe.csv",
@@ -147,7 +147,7 @@
                         "virtual": true,
                         "aboutUrl": "testing-converting-a-pivoted-csvw-to-pandas-dataframe.csv#obs/{dim1},{dim2}@another-measure",
                         "propertyUrl": "qb:dataSet",
-                        "valueUrl": "testing-converting-a-pivoted-csvw-to-pandas-dataframe.csv#dataset"
+                        "valueUrl": "testing-converting-a-pivoted-csvw-to-pandas-dataframe.csv#qbDataSet"
                     }
                 ],
                 "foreignKeys": [
@@ -323,9 +323,7 @@
             "@type": [
                 "http://www.w3.org/ns/dcat#Resource",
                 "http://www.w3.org/ns/dcat#Dataset",
-                "http://purl.org/linked-data/cube#DataSet",
-                "http://www.w3.org/2000/01/rdf-schema#Resource",
-                "http://purl.org/linked-data/cube#Attachable"
+                "http://www.w3.org/2000/01/rdf-schema#Resource"
             ],
             "http://purl.org/dc/terms/identifier": [
                 {
@@ -361,9 +359,74 @@
                     "@value": "Testing converting a pivoted CSVW to pandas dataframe"
                 }
             ],
+            "http://www.w3.org/ns/dcat#distribution": [
+                {
+                    "@id": "testing-converting-a-pivoted-csvw-to-pandas-dataframe.csv#qbDataSet"
+                }
+            ]
+        },
+        {
+            "@id": "testing-converting-a-pivoted-csvw-to-pandas-dataframe.csv#qbDataSet",
+            "@type": [
+                "http://purl.org/linked-data/cube#Attachable",
+                "http://www.w3.org/ns/dcat#Distribution",
+                "http://www.w3.org/ns/dcat#Resource",
+                "http://purl.org/linked-data/cube#DataSet",
+                "http://www.w3.org/2000/01/rdf-schema#Resource"
+            ],
+            "http://purl.org/dc/terms/creator": [
+                {
+                    "@id": "https://www.gov.uk/government/organisations/office-for-national-statistics"
+                }
+            ],
+            "http://purl.org/dc/terms/identifier": [
+                {
+                    "@value": "Testing converting a pivoted CSVW to pandas dataframe"
+                }
+            ],
+            "http://purl.org/dc/terms/issued": [
+                {
+                    "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+                    "@value": "2023-03-31T17:33:01.600425"
+                }
+            ],
+            "http://purl.org/linked-data/cube#structure": [
+                {
+                    "@id": "testing-converting-a-pivoted-csvw-to-pandas-dataframe.csv#structure"
+                }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#label": [
+                {
+                    "@language": "en",
+                    "@value": "Testing converting a pivoted CSVW to pandas dataframe"
+                }
+            ],
+            "http://www.w3.org/ns/dcat#isDistributionOf": [
+                {
+                    "@id": "testing-converting-a-pivoted-csvw-to-pandas-dataframe.csv#dataset"
+                }
+            ],
             "http://www.w3.org/ns/prov#wasGeneratedBy": [
                 {
                     "@id": "testing-converting-a-pivoted-csvw-to-pandas-dataframe.csv#csvcubed-build-activity"
+                }
+            ]
+        },
+        {
+            "@id": "https://github.com/GSS-Cogs/csvcubed/releases/tag/v0.1.0.dev0",
+            "@type": [
+                "http://www.w3.org/ns/prov#Entity",
+                "http://www.w3.org/2000/01/rdf-schema#Resource"
+            ],
+            "http://purl.org/dc/terms/title": [
+                {
+                    "@language": "en",
+                    "@value": "csvcubed v0.1.0.dev0"
+                }
+            ],
+            "http://www.w3.org/ns/prov#hasPrimarySource": [
+                {
+                    "@id": "https://pypi.org/project/csvcubed/0.1.0.dev0/"
                 }
             ]
         },
